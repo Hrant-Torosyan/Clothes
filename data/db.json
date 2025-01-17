@@ -1,0 +1,319 @@
+{
+  "users": [
+    {
+      "id": "b8d7",
+      "fullName": "test",
+      "email": "test@aa.aa",
+      "password": "asd",
+      "image": "NoImage",
+      "favorites": [],
+      "basket": []
+    },
+    {
+      "id": "769e",
+      "fullName": "asd",
+      "email": "asd@aa.aa",
+      "password": "asd",
+      "image": "NoImage",
+      "favorites": [
+        "5"
+      ],
+      "basket": []
+    }
+  ],
+  "clothes": [
+    {
+      "id": "1",
+      "img": "/images/clothes/cloth1.jpg",
+      "comments": [],
+      "aviable": 0,
+      "price": "120",
+      "name": "Casual Shirt",
+      "description": "A comfortable cotton shirt perfect for everyday wear.",
+      "sale": "20%",
+      "brand": "FashionBrand",
+      "category": "Shirts",
+      "colour": {
+        "id": 1,
+        "hexColour": "#A15843",
+        "name": "Brown"
+      },
+      "size": [
+        "S",
+        "L",
+        "XL"
+      ],
+      "gender": "CHILDREN"
+    },
+    {
+      "id": "2",
+      "img": "/images/clothes/cloth2.jpg",
+      "comments": [],
+      "aviable": 20,
+      "price": "220",
+      "name": "Elegant Dress",
+      "description": "A stylish evening dress with a modern design.",
+      "sale": null,
+      "brand": "LuxuryStyle",
+      "category": "Dresses",
+      "colour": {
+        "id": 2,
+        "hexColour": "#D5BA98",
+        "name": "Beige"
+      },
+      "size": [
+        "S",
+        "L"
+      ],
+      "gender": "FEMALE"
+    },
+    {
+      "id": "3",
+      "img": "/images/clothes/cloth3.jpg",
+      "comments": [],
+      "aviable": 20,
+      "price": "120",
+      "name": "Unisex Jacket",
+      "description": "A versatile jacket suitable for all seasons.",
+      "sale": "15%",
+      "brand": "OutdoorGear",
+      "category": "Jackets",
+      "colour": {
+        "id": 5,
+        "hexColour": "#4D91C6",
+        "name": "Blue"
+      },
+      "size": [
+        "S",
+        "L"
+      ],
+      "gender": "UNISEX"
+    },
+    {
+      "id": "4",
+      "img": "/images/clothes/cloth4.jpg",
+      "comments": [],
+      "aviable": 20,
+      "price": "120",
+      "name": "Elegant Dress",
+      "description": "A stylish evening dress with a modern design.",
+      "sale": null,
+      "brand": "LuxuryStyle",
+      "category": "Dresses",
+      "colour": {
+        "id": 11,
+        "hexColour": "#F7BF68",
+        "name": "Golden"
+      },
+      "size": [
+        "S",
+        "L"
+      ],
+      "gender": "FEMALE"
+    },
+    {
+      "id": "5",
+      "img": "/images/clothes/cloth4.jpg",
+      "comments": [
+        {
+          "comment": "testssts",
+          "rating": 7,
+          "user": {
+            "id": "769e",
+            "fullName": "asd",
+            "image": "NoImage"
+          },
+          "id": "42029863-e2c4-40b1-858d-de34cdce3c3b"
+        }
+      ],
+      "aviable": 20,
+      "price": "120",
+      "name": "Elegant Dress",
+      "description": "A stylish evening dress with a modern design.",
+      "sale": null,
+      "brand": "LuxuryStyle",
+      "category": "Dresses",
+      "colour": {
+        "id": 11,
+        "hexColour": "#F7BF68",
+        "name": "Golden"
+      },
+      "size": [
+        "S",
+        "L"
+      ],
+      "gender": "FEMALE"
+    }
+  ],
+  "brands": [
+    {
+      "id": "1",
+      "name": "Adidas"
+    },
+    {
+      "id": "2",
+      "name": "Nike"
+    },
+    {
+      "id": "3",
+      "name": "Puma"
+    },
+    {
+      "id": "4",
+      "name": "Gucci"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Knitwear & Sweats"
+    },
+    {
+      "id": "2",
+      "name": "Tops"
+    },
+    {
+      "id": "3",
+      "name": "Outerwear"
+    },
+    {
+      "id": "4",
+      "name": "Shorts"
+    },
+    {
+      "id": "5",
+      "name": "Jeans & Trousers"
+    },
+    {
+      "id": "6",
+      "name": "Accessories"
+    }
+  ],
+  "colours": [
+    {
+      "id": "1",
+      "hexColour": "#A15843",
+      "name": "Brown"
+    },
+    {
+      "id": "2",
+      "hexColour": "#D5BA98",
+      "name": "Beige"
+    },
+    {
+      "id": "3",
+      "hexColour": "#2D2D2D",
+      "name": "Dark Gray"
+    },
+    {
+      "id": "4",
+      "hexColour": "#F2D6B3",
+      "name": "Peach"
+    },
+    {
+      "id": "5",
+      "hexColour": "#4D91C6",
+      "name": "Blue"
+    },
+    {
+      "id": "6",
+      "hexColour": "#9A7352",
+      "name": "Coffee"
+    },
+    {
+      "id": "7",
+      "hexColour": "#664238",
+      "name": "Chocolate"
+    },
+    {
+      "id": "8",
+      "hexColour": "#F6F6F6",
+      "name": "Light Gray"
+    },
+    {
+      "id": "9",
+      "hexColour": "#DE8E65",
+      "name": "Coral"
+    },
+    {
+      "id": "10",
+      "hexColour": "#F3E0AC",
+      "name": "Sand"
+    },
+    {
+      "id": "11",
+      "hexColour": "#F7BF68",
+      "name": "Golden"
+    },
+    {
+      "id": "12",
+      "hexColour": "#55A860",
+      "name": "Green"
+    },
+    {
+      "id": "13",
+      "hexColour": "#BEBEBE",
+      "name": "Gray"
+    },
+    {
+      "id": "14",
+      "hexColour": "#E5E5E5",
+      "name": "White Smoke"
+    },
+    {
+      "id": "15",
+      "hexColour": "#394868",
+      "name": "Navy Blue"
+    },
+    {
+      "id": "16",
+      "hexColour": "#C3A98B",
+      "name": "Taupe"
+    },
+    {
+      "id": "17",
+      "hexColour": "#F48037",
+      "name": "Orange"
+    },
+    {
+      "id": "18",
+      "hexColour": "#ED7A9E",
+      "name": "Pink"
+    },
+    {
+      "id": "19",
+      "hexColour": "#764C82",
+      "name": "Purple"
+    },
+    {
+      "id": "20",
+      "hexColour": "#DC343B",
+      "name": "Red"
+    },
+    {
+      "id": "21",
+      "hexColour": "#D6D5C6",
+      "name": "Cream"
+    },
+    {
+      "id": "22",
+      "hexColour": "#CAC2B9",
+      "name": "Almond"
+    },
+    {
+      "id": "23",
+      "hexColour": "#B69574",
+      "name": "Bronze"
+    },
+    {
+      "id": "24",
+      "hexColour": "#FFFFFF",
+      "name": "White"
+    },
+    {
+      "id": "25",
+      "hexColour": "#FFD400",
+      "name": "Yellow"
+    }
+  ]
+}

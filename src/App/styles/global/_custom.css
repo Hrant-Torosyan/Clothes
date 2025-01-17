@@ -1,0 +1,217 @@
+@layer utilities {
+	.customInput {
+		width: 100%;
+		padding: 1.5rem;
+		font-size: 1.6rem;
+		border-radius: 1rem;
+		color: white;
+		border: 0.2rem solid transparent;
+		@apply bg-appLightBlack  hover:border-orange transition-all;
+	}
+	.customInput.small {
+		padding: 0.8rem;
+		font-size: 1.4rem;
+		border-radius: 1.2rem;
+		border: 0.1rem solid;
+		@apply border-gray hover:border-orange transition-all;
+	}
+
+	.customInput::placeholder {
+		@apply text-gray;
+	}
+	.customInput:focus {
+		@apply border-orange;
+	}
+	.customInput.error {
+		@apply border-red;
+	}
+	.customInput.dis {
+		pointer-events: none !important;
+		@apply bg-gray !important;
+	}
+	.inputEye {
+		position: absolute;
+		right: 1.5rem;
+		font-size: 1.8rem;
+		top: 50%;
+		color: white;
+		cursor: pointer;
+		transform: translate(0, -25%);
+		@apply transition-all;
+	}
+	.inputEye:hover {
+		@apply text-orange;
+	}
+	.customInput.small .inputEye {
+		right: 0.8rem;
+	}
+
+	/**
+	* I_N_P_U_T
+	*/
+
+	.customButton {
+		width: 100%;
+		padding: 1.35rem;
+		font-size: 1.8rem;
+		border-radius: 1rem;
+		text-align: center;
+		color: white;
+		border: 0.2rem solid;
+		user-select: none;
+		@apply bg-orange border-orange transition-all hover:bg-transparent;
+	}
+	.customButton.small {
+		padding: 0.8rem;
+		font-size: 1.4rem;
+		border-radius: 1.2rem;
+		border-width: 0.1rem;
+	}
+	.customButton.smaller {
+		padding: 0.2rem;
+		font-size: 1rem;
+		border-radius: 5rem;
+		border-width: 0.1rem;
+	}
+	.customButton.reverse {
+		@apply bg-transparent border-orange transition-all hover:bg-orange;
+	}
+	.customButton.dis {
+		pointer-events: none !important;
+		@apply bg-gray border-gray;
+	}
+	/**
+	* B_U_T_T_O_N
+	*/
+
+	.line {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		border-bottom: 0.1rem solid;
+		border-image: linear-gradient(
+				90deg,
+				rgba(35, 35, 32, 1) 0%,
+				rgba(175, 175, 175, 0.4) 50%,
+				rgba(35, 35, 35, 1) 100%
+			)
+			30;
+	}
+	/**
+	* L_I_N_E
+	*/
+
+	.navItem {
+		font-size: 2rem;
+		color: white;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		width: 100%;
+		@apply transition-all;
+	}
+	.navItem:hover {
+		@apply text-orange;
+	}
+	.navItem:hover .navItemFon {
+		opacity: 1 !important;
+	}
+	.navItem.active {
+		pointer-events: none;
+		@apply text-orange;
+	}
+	.navItem.active .navItemFon {
+		opacity: 1 !important;
+	}
+	.navItemFon {
+		border-left: 0.3rem solid transparent;
+		width: 4rem;
+		height: 4rem;
+		background: linear-gradient(
+			90deg,
+			rgb(246, 96, 31) -26%,
+			rgba(17, 17, 17, 0) 91%
+		);
+		opacity: 0;
+		@apply transition-all border-orange;
+	}
+	/**
+	* N_A_V
+	*/
+
+	.select {
+		z-index: 999;
+		position: relative;
+		width: 100%;
+		padding: 0.8rem;
+		border-radius: 1.2rem;
+		border: 0.1rem solid;
+		cursor: pointer;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		&:focus-within,
+		&:hover,
+		&.active {
+			@apply border-orange;
+		}
+		@apply transition-all border-gray bg-appLightBlack hover:border-orange;
+		> p {
+			font-weight: 600;
+			font-size: 1.4rem;
+		}
+		.angle {
+			@apply transition-all;
+		}
+
+		.selectMenu {
+			cursor: auto;
+			left: 0;
+			width: 100%;
+			/* max-height: 16rem; */
+			overflow: auto;
+			position: absolute;
+			z-index: 333;
+			top: 4.5rem;
+			border: 0.1rem solid transparent;
+			@apply transition-all bg-appLightBlack shadow border-orange;
+			border-radius: 1.2rem;
+			transform: translate(0, 20%);
+			opacity: 0;
+			.selectMenuItem {
+				display: flex;
+				gap: 1rem;
+				font-size: 1.6rem;
+				padding: 0.5rem 1rem;
+				cursor: pointer;
+				border-radius: 0.5rem;
+				margin-top: 0.4rem;
+				@apply transition-all bg-gray hover:bg-orange;
+			}
+			.selectMenuItem.active {
+				@apply bg-orange;
+			}
+		}
+	}
+	.openSelectAnimation {
+		overflow: visible;
+		.angle {
+			transform: rotate(-180deg);
+		}
+		.selectMenu {
+			opacity: 1 !important;
+			transform: translate(0, 0) !important;
+		}
+	}
+	.closeSelectAnimation {
+		animation: delayOverflow 0.7s ease forwards;
+	}
+	@keyframes delayOverflow {
+		from {
+			overflow: visible;
+		}
+		to {
+			overflow: hidden;
+		}
+	}
+}
