@@ -1,31 +1,111 @@
 {
   "users": [
     {
-      "id": "b8d7",
-      "fullName": "test",
-      "email": "test@aa.aa",
-      "password": "asd",
-      "image": "NoImage",
-      "favorites": [],
-      "basket": []
+      "id": "43e4",
+      "email": "admin@aa.aa",
+      "password": "admin",
+      "role": "ADMIN",
+      "fullName": "Hrant asd",
+      "age": "",
+      "gender": "",
+      "country": "",
+      "facebook": "",
+      "instagram": "",
+      "twitter": ""
     },
     {
-      "id": "769e",
-      "fullName": "asd",
+      "id": "1b39",
       "email": "asd@aa.aa",
       "password": "asd",
       "image": "NoImage",
-      "favorites": [
-        "5"
+      "favorites": [],
+      "basket": [
+        {
+          "id": "3f295e80-9508-4541-b839-004613ee08d6",
+          "clotheId": "3",
+          "count": 1,
+          "size": "S",
+          "aviable": 20
+        }
       ],
-      "basket": []
+      "role": "USER",
+      "fullName": "dddd asd",
+      "age": "22",
+      "gender": "",
+      "country": "",
+      "facebook": "",
+      "instagram": "",
+      "twitter": ""
+    },
+    {
+      "id": "cb71",
+      "fullName": "asd",
+      "email": "asda@aa.aa",
+      "password": "asd",
+      "confirmPassword": "asd",
+      "image": "NoImage",
+      "favorites": [],
+      "basket": [],
+      "role": "USER"
+    },
+    {
+      "id": "e264",
+      "fullName": "asd",
+      "email": "asd2@aa.aa",
+      "password": "asd",
+      "confirmPassword": "asd",
+      "image": "NoImage",
+      "favorites": [],
+      "basket": [],
+      "role": "USER"
     }
   ],
   "clothes": [
     {
       "id": "1",
       "img": "/images/clothes/cloth1.jpg",
-      "comments": [],
+      "comments": [
+        {
+          "comment": "asd",
+          "rating": 1,
+          "user": {
+            "id": "24e4",
+            "fullName": "testasdsssasd test",
+            "image": "NoImage"
+          },
+          "id": "5255315e-c112-4b82-b018-28220dfd705f"
+        },
+        {
+          "comment": "asd",
+          "rating": 1,
+          "user": {
+            "id": "24e4",
+            "fullName": "testasdsssasd test",
+            "image": "NoImage"
+          },
+          "id": "4f07a891-f3d8-4fcf-9287-157644860bee"
+        },
+        {
+          "comment": "asd",
+          "rating": 1,
+          "user": {
+            "id": "24e4",
+            "fullName": "testasdsssasd test",
+            "image": "NoImage"
+          },
+          "id": "3d187b75-4bbf-4d61-aac1-139f6ed81149"
+        },
+        {
+          "comment": "asd",
+          "rating": 1,
+          "user": {
+            "id": "24e4",
+            "fullName": "testasdsssasd test",
+            "image": "NoImage"
+          },
+          "id": "0e0e8f1d-e6c7-448b-abc4-4b96b253d9f1"
+        }
+      ],
       "aviable": 0,
       "price": "120",
       "name": "Casual Shirt",
@@ -48,7 +128,18 @@
     {
       "id": "2",
       "img": "/images/clothes/cloth2.jpg",
-      "comments": [],
+      "comments": [
+        {
+          "comment": "fgdfg",
+          "rating": 5,
+          "user": {
+            "id": "24e4",
+            "fullName": "Hrant Torosyan",
+            "image": "NoImage"
+          },
+          "id": "c0a2682d-b812-4b14-a3de-5957b4b3f0aa"
+        }
+      ],
       "aviable": 20,
       "price": "220",
       "name": "Elegant Dress",
@@ -70,7 +161,38 @@
     {
       "id": "3",
       "img": "/images/clothes/cloth3.jpg",
-      "comments": [],
+      "comments": [
+        {
+          "comment": "asd",
+          "rating": 1,
+          "user": {
+            "id": "24e4",
+            "fullName": "testasdsssasd test",
+            "image": "NoImage"
+          },
+          "id": "8e284b57-96ec-478d-a42d-6c4da79171e2"
+        },
+        {
+          "comment": "asd",
+          "rating": 1,
+          "user": {
+            "id": "24e4",
+            "fullName": "testasdsssasd test",
+            "image": "NoImage"
+          },
+          "id": "2bac8ac4-6849-4891-87e0-e41353ccbf75"
+        },
+        {
+          "comment": "asdasd",
+          "rating": 1,
+          "user": {
+            "id": "1b39",
+            "fullName": "dddd asd",
+            "image": "NoImage"
+          },
+          "id": "c39156c8-b7c5-4f72-a983-92ac3dc01efe"
+        }
+      ],
       "aviable": 20,
       "price": "120",
       "name": "Unisex Jacket",

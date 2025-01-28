@@ -9,9 +9,14 @@ const Nav: React.FC = () => {
 	const { user } = useAppSelector((state) => state.auth);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
+
+	const userRole = user?.role || "USER";
+
 	const links = user
-		? navLinks
-		: navLinks.filter((link) => link.isLogined === true);
+		? navLinks.filter((link) => link.role === userRole)
+		: navLinks.filter(
+				(link) => link.isLogined === true && link.role === userRole
+		  );
 
 	const handleLogout = () => {
 		dispatch(logout());

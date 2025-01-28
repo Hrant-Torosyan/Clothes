@@ -7,6 +7,7 @@ import {
 	FiltersType,
 	HTTPStatus,
 	RequestErrorType,
+	RoleType,
 	UserType,
 } from "@/types/types";
 import getUserInfo from "@/utils/getUserInfo";
@@ -16,9 +17,11 @@ import {
 	countEdit,
 	getBasketItems,
 	getFavorites,
+	getUsers,
 	login,
 	register,
 	removeBasketItem,
+	updateUserInfo,
 } from "@/redux/slices/auth/auth.thunk";
 import { RootState } from "@/redux/store";
 
@@ -26,9 +29,12 @@ interface AuthState {
 	user: UserType | null;
 	status: HTTPStatus;
 	error: RequestErrorType;
+	users: UserType[];
 	register: {
-		message: string | null;
-
+		status: HTTPStatus;
+		error: RequestErrorType;
+	};
+	updateUserInfo: {
 		status: HTTPStatus;
 		error: RequestErrorType;
 	};
@@ -41,7 +47,6 @@ interface AuthState {
 		status: HTTPStatus;
 		error: RequestErrorType;
 	};
-
 	removeBasket: {
 		status: HTTPStatus;
 		error: RequestErrorType;
@@ -55,13 +60,18 @@ interface AuthState {
 
 const initialState: AuthState = {
 	user: getUserInfo(),
+	users: [],
 	status: HTTP_STATUS.IDLE,
 	error: null,
 	register: {
 		status: HTTP_STATUS.IDLE,
-		message: null,
 		error: null,
 	},
+	updateUserInfo: {
+		status: HTTP_STATUS.IDLE,
+		error: null,
+	},
+
 	addRemoveFavorite: {
 		status: HTTP_STATUS.IDLE,
 		error: null,
@@ -94,12 +104,6 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		registerSucceeded: (state) => {
-			state.register.status = HTTP_STATUS.IDLE;
-		},
-		loginSucceeded: (state) => {
-			state.status = HTTP_STATUS.IDLE;
-		},
 		logout: (state) => {
 			localStorage.removeItem("auth");
 			Object.assign(state, initialState);
@@ -145,6 +149,62 @@ const authSlice = createSlice({
 			 * Login
 			 */
 
+			.addCase(updateUserInfo.pending, (state) => {
+				state.updateUserInfo.status = HTTP_STATUS.PENDING;
+				state.updateUserInfo.error = null;
+			})
+			.addCase(
+				updateUserInfo.fulfilled,
+				(
+					state,
+					action: PayloadAction<{
+						type: RoleType;
+						user: UserType;
+					}>
+				) => {
+					const { type, user } = action.payload;
+					if (type === "USER") {
+						state.user = user;
+					} else {
+						state.users = state.users.map((u) =>
+							u.id === user.id ? user : u
+						);
+					}
+					state.updateUserInfo.status = HTTP_STATUS.FULFILLED;
+				}
+			)
+			.addCase(
+				updateUserInfo.rejected,
+				(state, action: PayloadAction<RequestErrorType>) => {
+					state.updateUserInfo.status = HTTP_STATUS.REJECTED;
+					state.updateUserInfo.error = action.payload;
+				}
+			)
+			/**
+			 * Update the user
+			 */
+
+			.addCase(getUsers.pending, (state) => {
+				state.status = HTTP_STATUS.PENDING;
+				state.error = null;
+			})
+			.addCase(
+				getUsers.fulfilled,
+				(state, action: PayloadAction<UserType[]>) => {
+					state.users = action.payload;
+					state.status = HTTP_STATUS.FULFILLED;
+				}
+			)
+			.addCase(
+				getUsers.rejected,
+				(state, action: PayloadAction<RequestErrorType>) => {
+					state.status = HTTP_STATUS.REJECTED;
+					state.error = action.payload;
+				}
+			)
+			/**
+			 * Update the user
+			 */
 			.addCase(addRemoveFavorite.pending, (state) => {
 				state.addRemoveFavorite.status = HTTP_STATUS.PENDING;
 				state.addRemoveFavorite.error = null;
@@ -279,5 +339,5 @@ const authSlice = createSlice({
 });
 export const getUserState = (state: RootState) => state.auth;
 
-export const { registerSucceeded, loginSucceeded, logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

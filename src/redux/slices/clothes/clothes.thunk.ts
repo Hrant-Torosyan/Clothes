@@ -143,38 +143,35 @@ export const addComment = createAsyncThunk<
 	CommentType[],
 	addCommentType,
 	{ rejectValue: RequestErrorType; dispatch: AppDispatch }
->(
-	"clothes/getCategories",
-	async (credentials, { rejectWithValue, dispatch }) => {
-		try {
-			const { data: clothes } = await axiosClient.get(`/clothes`);
-			const cloth: ClothesTypes = clothes.find(
-				(item: ClothesTypes) => item.id === credentials.clotId
-			);
-			cloth.comments = [
-				...cloth.comments,
-				{ ...credentials.comment, id: generateUniqueId() },
-			] as CommentType[];
+>("clothes/addComment", async (credentials, { rejectWithValue, dispatch }) => {
+	try {
+		const { data: clothes } = await axiosClient.get(`/clothes`);
+		const cloth: ClothesTypes = clothes.find(
+			(item: ClothesTypes) => item.id === credentials.clotId
+		);
+		cloth.comments = [
+			...cloth.comments,
+			{ ...credentials.comment, id: generateUniqueId() },
+		] as CommentType[];
 
-			const { data } = await axiosClient.put(
-				`/clothes/${credentials.clotId}`,
-				cloth
-			);
+		const { data } = await axiosClient.put(
+			`/clothes/${credentials.clotId}`,
+			cloth
+		);
 
-			dispatch(getComments({ id: credentials.clotId }));
-			toast.success("Your comment added successfully");
+		dispatch(getComments({ id: credentials.clotId }));
+		toast.success("Your comment added successfully");
 
-			return data;
-		} catch (error: unknown) {
-			const axiosError = error as RequestErrorType;
-			const errorMessage = {
-				message: axiosError.message || "Failed to add comment",
-			};
-			toast.error("Failed to add comment");
-			return rejectWithValue(errorMessage);
-		}
+		return data;
+	} catch (error: unknown) {
+		const axiosError = error as RequestErrorType;
+		const errorMessage = {
+			message: axiosError.message || "Failed to add comment",
+		};
+		toast.error("Failed to add comment");
+		return rejectWithValue(errorMessage);
 	}
-);
+});
 /**
  * Get Comments
  */

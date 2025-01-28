@@ -1,3 +1,4 @@
+import { RoleType } from "./../../../types/types";
 import axiosClient from "@/redux/axiosClient";
 import { AppDispatch } from "@/redux/store";
 import {
@@ -25,9 +26,11 @@ export const register = createAsyncThunk<
 			`/users?email=${credentials.email}`
 		);
 		if (existingUsers.length > 0) {
+			toast.error("Email already exists");
 			return rejectWithValue({ message: "Email already exists" });
 		}
 		const { data } = await axiosClient.post("/users", credentials);
+		toast.success("Register successfully");
 		return data;
 	} catch (error: unknown) {
 		const axiosError = error as RequestErrorType;
@@ -54,7 +57,8 @@ export const login = createAsyncThunk<
 			localStorage.setItem("auth", JSON.stringify(user));
 			return user;
 		} else {
-			return rejectWithValue({ message: "Email already exists" });
+			toast.error("Login or password wrong !");
+			return rejectWithValue({ message: "Login or password wrong !" });
 		}
 	} catch (error: unknown) {
 		const axiosError = error as RequestErrorType;
@@ -66,6 +70,75 @@ export const login = createAsyncThunk<
 });
 /**
  * Login
+ */
+
+export const updateUserInfo = createAsyncThunk<
+	{
+		type: RoleType;
+		user: UserType;
+	},
+	{
+		type: RoleType;
+		user: UserType;
+	},
+	{ rejectValue: RequestErrorType }
+>("auth/update", async (credentials, { rejectWithValue }) => {
+	try {
+		const { data: existingUsers } = await axiosClient.get(
+			`/users?email=${credentials.user.email}`
+		);
+		const isThisUser = existingUsers.find(
+			(user: UserType) => user.id !== credentials.user.id
+		);
+		if (existingUsers.length > 0 && isThisUser) {
+			toast.error(`Email already exists`);
+			return rejectWithValue({ message: "Email already exists" });
+		}
+		const { data: user } = await axiosClient.put(
+			`/users/${credentials.user.id}`,
+			credentials.user
+		);
+		if (credentials.type === "USER") {
+			localStorage.setItem("auth", JSON.stringify(user));
+			toast.success("Your personal is updated successfully");
+		} else {
+			toast.success(
+				`${credentials.user.fullName} personal is updated successfully`
+			);
+		}
+
+		return { type: credentials.type, user: user as UserType };
+	} catch (error: unknown) {
+		const axiosError = error as RequestErrorType;
+		const errorMessage = {
+			message: axiosError.message || "Failed to log in",
+		};
+		toast.success(`Failed to log in updated ${credentials.user.fullName}`);
+		return rejectWithValue(errorMessage);
+	}
+});
+/**
+ * Update the user
+ */
+
+export const getUsers = createAsyncThunk<
+	UserType[],
+	void,
+	{ rejectValue: RequestErrorType }
+>("auth/get", async (_, { rejectWithValue }) => {
+	try {
+		const { data: users } = await axiosClient.get(`/users`);
+		return users;
+	} catch (error: unknown) {
+		const axiosError = error as RequestErrorType;
+		const errorMessage = {
+			message: axiosError.message || "Failed to log in",
+		};
+		return rejectWithValue(errorMessage);
+	}
+});
+/**
+ * Update the user
  */
 
 export const addRemoveFavorite = createAsyncThunk<

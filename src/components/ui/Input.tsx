@@ -4,23 +4,25 @@ import { validNumber } from "@/utils/validNumber";
 import { ErrorType } from "@/types/types";
 
 type InputProps = {
-	type: "TEXT" | "NUM" | "PASS";
+	name: string;
+	type: "TEXT" | "NUM" | "PASS" | "DESCRIPTION";
 	placeholder: string;
 	className?: string;
 	value: string;
-	setValue: (val: string) => void;
+	onChange: (name: string, value: string) => void;
 	error?: ErrorType;
-	setError?: (val: ErrorType) => void;
+	setError?: (error: { [x: string]: ErrorType }) => void;
 	disabled: boolean;
 	style?: "NORMAL" | "SMALL";
 };
 
 const Input: React.FC<InputProps> = ({
+	name,
 	type,
 	placeholder,
 	className = "",
 	value,
-	setValue,
+	onChange,
 	error,
 	setError,
 	disabled,
@@ -28,18 +30,23 @@ const Input: React.FC<InputProps> = ({
 }) => {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		if (disabled) {
+			return;
+		}
 		const inputValue = e.target.value;
 
 		if (error?.active && setError) {
-			setError({ active: false, message: null });
+			setError({ [name]: { active: false, message: null } });
 		}
 
-		if (type === "NUM" && !validNumber(inputValue)) {
+		if (type === "NUM" && validNumber(inputValue)) {
 			return;
 		}
 
-		setValue(inputValue);
+		onChange(name, inputValue);
 	};
 
 	const inputType =
@@ -61,14 +68,28 @@ const Input: React.FC<InputProps> = ({
 
 	return (
 		<div className={`relative ${className}`}>
-			<input
-				type={inputType}
-				placeholder={placeholder}
-				className={inputClasses}
-				value={value}
-				onChange={handleChange}
-				disabled={disabled}
-			/>
+			{type === "DESCRIPTION" ? (
+				<textarea
+					name={name}
+					placeholder={placeholder}
+					className={inputClasses}
+					value={value}
+					onChange={handleChange}
+					disabled={disabled}
+				>
+					{value}
+				</textarea>
+			) : (
+				<input
+					name={name}
+					type={inputType}
+					placeholder={placeholder}
+					className={inputClasses}
+					value={value}
+					onChange={handleChange}
+					disabled={disabled}
+				/>
+			)}
 			{type === "PASS" && (
 				<div
 					onClick={() => setIsPasswordVisible(!isPasswordVisible)}

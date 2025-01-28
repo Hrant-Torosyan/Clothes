@@ -1,11 +1,10 @@
 import Load from "@/components/shared/Load/Load";
-import Favorites from "@/pages/profile/Favorites/Favorites";
-import { useFavorites } from "@/pages/profile/Favorites/useFavorites";
+import Favorites from "@/pages/profile/public/Favorites/Favorites";
+import { useFavorites } from "@/pages/profile/public/Favorites/useFavorites";
 
 const FavoritesAsync = () => {
 	const { isLoading } = useFavorites();
 
-	console.log(isLoading);
 	if (isLoading) {
 		return (
 			<div className="h-screen">

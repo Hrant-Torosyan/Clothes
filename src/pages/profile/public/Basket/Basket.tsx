@@ -1,6 +1,6 @@
 import Title from "@/components/widgets/Title";
 import { useAppSelector } from "@/hooks/reduxHooks";
-import BasketTable from "@/pages/profile/Basket/BasketTable";
+import BasketTable from "@/pages/profile/public/Basket/_components/BasketTable";
 import { getUserState } from "@/redux/slices/auth/auth.store";
 
 const Basket = () => {

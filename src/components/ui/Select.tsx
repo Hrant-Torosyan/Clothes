@@ -1,6 +1,6 @@
 import Input from "@/components/ui/Input";
 import useClickOutside from "@/hooks/useClickOutside";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { FaAngleUp } from "react-icons/fa";
 
 type Props = {
@@ -44,8 +44,9 @@ const Select = ({
 						Selected {selectedLength > 0 ? selectedLength : "All"}
 					</p>
 					<Input
+						name="search"
 						value={search}
-						setValue={setSearch}
+						onChange={(name, value) => setSearch(value)}
 						type={"TEXT"}
 						placeholder={"Search"}
 						disabled={false}

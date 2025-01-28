@@ -1,4 +1,37 @@
 @layer utilities {
+	.modal {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		backdrop-filter: blur(5px);
+		color: white;
+	}
+	.modal .modalContent {
+		width: 30%;
+		@apply bg-appLightBlack rounded-3xl  p-4;
+	}
+	.modal .modalContent .modalContentTitle {
+		display: flex;
+		justify-content: center;
+		@apply pb-6;
+	}
+	.modal .modalContent .modalContentTitle h3 {
+		margin-left: auto;
+		@apply text-2xl;
+	}
+	.modal .modalContent .modalContentTitle button {
+		margin-left: auto;
+		@apply text-3xl w-9 h-9 rounded-full flex justify-center items-center transition-all hover:bg-gray;
+	}
+	.modal .modalContent .modalContentItem {
+		@apply p-6 text-base;
+	}
+
 	.customInput {
 		width: 100%;
 		padding: 1.5rem;
@@ -6,6 +39,7 @@
 		border-radius: 1rem;
 		color: white;
 		border: 0.2rem solid transparent;
+		resize: none;
 		@apply bg-appLightBlack  hover:border-orange transition-all;
 	}
 	.customInput.small {
@@ -26,8 +60,7 @@
 		@apply border-red;
 	}
 	.customInput.dis {
-		pointer-events: none !important;
-		@apply bg-gray !important;
+		@apply bg-gray pointer-events-none !important;
 	}
 	.inputEye {
 		position: absolute;

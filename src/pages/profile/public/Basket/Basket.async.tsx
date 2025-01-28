@@ -1,6 +1,6 @@
 import Load from "@/components/shared/Load/Load";
-import Basket from "@/pages/profile/Basket/Basket";
-import { useBasket } from "@/pages/profile/Basket/useBasket";
+import Basket from "@/pages/profile/public/Basket/Basket";
+import { useBasket } from "@/pages/profile/public/Basket/useBasket";
 
 const BasketAsync = () => {
 	const { isLoading } = useBasket();

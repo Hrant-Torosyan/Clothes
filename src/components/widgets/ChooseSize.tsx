@@ -1,7 +1,6 @@
+import { mainSizes } from "@/constants/sizes";
 import { SizeType } from "@/types/types";
 import React from "react";
-
-const mainSizes = ["S", "M", "L", "XL", "XXL"] as SizeType[];
 
 type ChooseSize = {
 	sizes?: SizeType[];

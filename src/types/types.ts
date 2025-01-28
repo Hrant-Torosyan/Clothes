@@ -15,6 +15,8 @@ export interface ErrorType {
 	active: boolean;
 	message: null | string;
 }
+export type ErrorTypes = Record<string, ErrorType>;
+
 /**
  * Type for input error state
  */
@@ -52,7 +54,7 @@ export type BasketRemovePayload = {
 /**
  * Type for Recuest Error
  */
-
+export type RoleType = "ADMIN" | "USER";
 export type UserType = {
 	id: string;
 	image: string;
@@ -61,6 +63,14 @@ export type UserType = {
 	password: string;
 	favorites: string[];
 	basket: BasketItemType[];
+	confirmPassword?: string;
+	age?: string;
+	role: RoleType;
+	gender?: string;
+	country?: string;
+	facebook?: string;
+	instagram?: string;
+	twitter?: string;
 };
 /**
  * Type for User
@@ -140,4 +150,12 @@ export type FiltersTypeData = {
 };
 /**
  * Type for Colours
+ */
+export type AddEditClothType = {
+	isOpen: boolean;
+	type?: "EDIT" | "ADD";
+	infoObj?: ClothesTypes;
+};
+/**
+ * Type for Add Edit Cloth
  */

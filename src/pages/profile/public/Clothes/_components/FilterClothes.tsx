@@ -16,7 +16,7 @@ import Checkbox from "@/components/widgets/Checkbox";
 type FilterClothesProps = {
 	gender: string;
 };
-const FilterClothes: React.FC<FilterClothesProps> = ({ gender }) => {
+const FilterClothes: React.FC<FilterClothesProps> = () => {
 	const { brands, categories, colours, filters } =
 		useAppSelector(getClothesState);
 	const dispatch = useAppDispatch();
@@ -51,7 +51,7 @@ const FilterClothes: React.FC<FilterClothesProps> = ({ gender }) => {
 						title={"Brand"}
 						selectedLength={brandsFilter.length}
 						optionsRenderer={(search: string) => {
-							let searchedBrands = brands.data.filter(
+							const searchedBrands = brands.data.filter(
 								(item) =>
 									item.name
 										.toLocaleLowerCase()
@@ -90,7 +90,7 @@ const FilterClothes: React.FC<FilterClothesProps> = ({ gender }) => {
 						title={"Category"}
 						selectedLength={categoryFilter.length}
 						optionsRenderer={(search: string) => {
-							let searchedCategories = categories.data.filter(
+							const searchedCategories = categories.data.filter(
 								(item) =>
 									item.name
 										.toLocaleLowerCase()
@@ -128,7 +128,7 @@ const FilterClothes: React.FC<FilterClothesProps> = ({ gender }) => {
 						title={"Colours"}
 						selectedLength={colourFilter.length}
 						optionsRenderer={(search: string) => {
-							let searchedColours = colours.data.filter(
+							const searchedColours = colours.data.filter(
 								(item) =>
 									item.name
 										.toLocaleLowerCase()
@@ -169,8 +169,11 @@ const FilterClothes: React.FC<FilterClothesProps> = ({ gender }) => {
 				</div>
 				<div className="flex gap-5 mb-5">
 					<Input
+						name="minPrice"
 						value={minPrice || ""}
-						setValue={(val) => handleToggleFilter("minPrice", val)}
+						onChange={(name, value) =>
+							handleToggleFilter(name as FilterKeysTypeData, value)
+						}
 						className=" w-full"
 						type={"NUM"}
 						placeholder={"Minimum price"}
@@ -178,8 +181,11 @@ const FilterClothes: React.FC<FilterClothesProps> = ({ gender }) => {
 						style="SMALL"
 					/>
 					<Input
+						name="maxPrice"
 						value={maxPrice || ""}
-						setValue={(val) => handleToggleFilter("maxPrice", val)}
+						onChange={(name, value) =>
+							handleToggleFilter(name as FilterKeysTypeData, value)
+						}
 						className=" w-full"
 						type={"NUM"}
 						placeholder={"Maximum price"}
@@ -188,8 +194,11 @@ const FilterClothes: React.FC<FilterClothesProps> = ({ gender }) => {
 					/>
 				</div>
 				<Input
+					name="search"
 					value={search || ""}
-					setValue={(val) => handleToggleFilter("search", val)}
+					onChange={(name, value) =>
+						handleToggleFilter(name as FilterKeysTypeData, value)
+					}
 					type={"TEXT"}
 					placeholder={"Search for clothes (name)"}
 					disabled={false}

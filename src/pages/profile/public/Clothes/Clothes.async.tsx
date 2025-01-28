@@ -1,6 +1,6 @@
 import Load from "@/components/shared/Load/Load";
-import Clothes from "@/pages/profile/Clothes/Clothes";
-import { useClothes } from "@/pages/profile/Clothes/useClothes";
+import Clothes from "@/pages/profile/public/Clothes/Clothes";
+import { useClothes } from "@/pages/profile/public/Clothes/useClothes";
 const ClothesAsync = () => {
 	const { isLoading } = useClothes();
 	if (isLoading) {
