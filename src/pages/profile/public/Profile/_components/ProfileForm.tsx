@@ -105,18 +105,48 @@ const ProfileForm = ({
 							<h3 className="text-xl ml-1 mb-2">Choose your gender</h3>
 							<SimpleSelect
 								title="Gender"
-								setSelect={(value) => onInputChange("gender", value)}
 								select={profilePayload.gender}
-								selectOptions={gender}
+								optionsRenderer={() =>
+									gender.map((genderValue, index) => (
+										<div
+											onClick={() =>
+												onInputChange("gender", genderValue)
+											}
+											className={`selectMenuItem 	${
+												genderValue === profilePayload.gender
+													? "active"
+													: ""
+											}`}
+											key={index}
+										>
+											{genderValue}
+										</div>
+									))
+								}
 							/>
 						</label>
 						<label className="w-full">
 							<h3 className="text-xl ml-1 mb-2">Choose your country</h3>
 							<SimpleSelect
 								title="Country"
-								setSelect={(value) => onInputChange("country", value)}
 								select={profilePayload.country}
-								selectOptions={countries}
+								optionsRenderer={() =>
+									countries.map((country, index) => (
+										<div
+											onClick={() =>
+												onInputChange("country", country)
+											}
+											className={`selectMenuItem 	${
+												country === profilePayload.country
+													? "active"
+													: ""
+											}`}
+											key={index}
+										>
+											{country}
+										</div>
+									))
+								}
 							/>
 						</label>
 					</div>

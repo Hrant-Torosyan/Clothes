@@ -2,8 +2,10 @@ import React from "react";
 import Image from "@/components/shared/Image/Image";
 import Button from "@/components/ui/Button";
 import EmptyState from "@/components/widgets/EmptyState";
-import { SlBasket } from "react-icons/sl";
+import { SlUser } from "react-icons/sl";
 import { UserType } from "@/types/types";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { deleteUser } from "@/redux/slices/auth/auth.thunk";
 type TableProps = {
 	users: UserType[];
 	className?: string;
@@ -15,6 +17,11 @@ const UsersTable: React.FC<TableProps> = ({
 	className,
 	setEditUserModal,
 }) => {
+	const dispatch = useAppDispatch();
+	const handleDelete = (id: Pick<UserType, "id">) => {
+		dispatch(deleteUser(id));
+	};
+
 	return (
 		<div
 			className={`bg-appBlack rounded-[2.4rem] h-[84vh] flex flex-col overflow-hidden  ${className}`}
@@ -70,7 +77,7 @@ const UsersTable: React.FC<TableProps> = ({
 									reverse={true}
 									style="SMALLER"
 									type={"button"}
-									onClick={() => console.log("")}
+									onClick={() => handleDelete({ id: item.id })}
 									title={"Delete"}
 									disabled={false}
 								/>
@@ -80,8 +87,8 @@ const UsersTable: React.FC<TableProps> = ({
 				) : (
 					<EmptyState
 						className="h-full"
-						icon={<SlBasket />}
-						message="Basket is empty"
+						icon={<SlUser />}
+						message="Users not found"
 					/>
 				)}
 			</div>

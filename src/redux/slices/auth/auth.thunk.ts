@@ -121,6 +121,27 @@ export const updateUserInfo = createAsyncThunk<
  * Update the user
  */
 
+export const deleteUser = createAsyncThunk<
+	Pick<UserType, "id">,
+	Pick<UserType, "id">,
+	{ rejectValue: RequestErrorType }
+>("auth/deleteUser", async (credentials, { rejectWithValue }) => {
+	try {
+		const { data } = await axiosClient.delete(`/users/${credentials.id}`);
+		toast.success("User deleted successfully !");
+		return { id: data.id };
+	} catch (error: unknown) {
+		const axiosError = error as RequestErrorType;
+		const errorMessage = {
+			message: axiosError.message || "Failed to delete User",
+		};
+		return rejectWithValue(errorMessage);
+	}
+});
+/**
+ * Delete user
+ */
+
 export const getUsers = createAsyncThunk<
 	UserType[],
 	void,

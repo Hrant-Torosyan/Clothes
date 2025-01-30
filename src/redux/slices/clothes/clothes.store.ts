@@ -9,14 +9,17 @@ import {
 	HTTPStatus,
 	RequestErrorType,
 	SizeType,
+	StaticType,
 } from "@/types/types";
 import {
+	deleteCloth,
 	getBrands,
 	getCategories,
 	getCloth,
 	getClothes,
 	getColours,
 	getComments,
+	updateCloth,
 } from "@/redux/slices/clothes/clothes.thunk";
 import { RootState } from "@/redux/store";
 
@@ -25,6 +28,9 @@ interface ClothesState {
 	status: HTTPStatus;
 	error: RequestErrorType;
 	cloth: FiltersType<ClothesTypes>;
+	updateCloth: StaticType;
+	deleteCloth: StaticType;
+
 	brands: FiltersType<FiltersTypeData[]>;
 	colours: FiltersType<FiltersTypeData[]>;
 	categories: FiltersType<FiltersTypeData[]>;
@@ -49,6 +55,14 @@ const initialState: ClothesState = {
 	error: null,
 	cloth: {
 		data: null,
+		status: HTTP_STATUS.IDLE,
+		error: null,
+	},
+	updateCloth: {
+		status: HTTP_STATUS.IDLE,
+		error: null,
+	},
+	deleteCloth: {
 		status: HTTP_STATUS.IDLE,
 		error: null,
 	},
@@ -264,6 +278,53 @@ const ClothesSlice = createSlice({
 			)
 			/**
 			 * Get Cloth
+			 */
+
+			.addCase(updateCloth.pending, (state) => {
+				state.updateCloth.status = HTTP_STATUS.PENDING;
+				state.updateCloth.error = null;
+			})
+			.addCase(
+				updateCloth.fulfilled,
+				(state, action: PayloadAction<ClothesTypes>) => {
+					state.clothesData = state.clothesData.map((c: ClothesTypes) =>
+						c.id === action.payload.id ? action.payload : c
+					);
+					state.updateCloth.status = HTTP_STATUS.FULFILLED;
+				}
+			)
+			.addCase(
+				updateCloth.rejected,
+				(state, action: PayloadAction<RequestErrorType>) => {
+					state.updateCloth.status = HTTP_STATUS.REJECTED;
+					state.updateCloth.error = action.payload;
+				}
+			)
+			/**
+			 * Update Cloth
+			 */
+			.addCase(deleteCloth.pending, (state) => {
+				state.deleteCloth.status = HTTP_STATUS.PENDING;
+				state.deleteCloth.error = null;
+			})
+			.addCase(
+				deleteCloth.fulfilled,
+				(state, action: PayloadAction<Pick<ClothesTypes, "id">>) => {
+					state.clothesData = state.clothesData.filter(
+						(c: ClothesTypes) => c.id !== action.payload.id
+					);
+					state.deleteCloth.status = HTTP_STATUS.FULFILLED;
+				}
+			)
+			.addCase(
+				deleteCloth.rejected,
+				(state, action: PayloadAction<RequestErrorType>) => {
+					state.deleteCloth.status = HTTP_STATUS.REJECTED;
+					state.deleteCloth.error = action.payload;
+				}
+			)
+			/**
+			 * Delete Cloth
 			 */
 
 			.addCase(getBrands.pending, (state) => {

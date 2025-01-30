@@ -32,7 +32,7 @@ const ClothesCard: React.FC<ClothesCardProps> = ({
 			<div className="relative h-full">
 				{sale !== null && (
 					<div className="absolute top-4 left-4 py-2 px-4 bg-orange border-solid border-gray border-[0.1rem] rounded-xl flex items-center shadow">
-						<p className="text-white text-sm">{sale}</p>
+						<p className="text-white text-sm">{sale}%</p>
 					</div>
 				)}
 				<Image url={img} alt={description} />

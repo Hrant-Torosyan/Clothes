@@ -4,6 +4,8 @@ import Button from "@/components/ui/Button";
 import EmptyState from "@/components/widgets/EmptyState";
 import { AddEditClothType, ClothesTypes } from "@/types/types";
 import { GiClothes } from "react-icons/gi";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { deleteCloth } from "@/redux/slices/clothes/clothes.thunk";
 
 type TableProps = {
 	basketItems: ClothesTypes[];
@@ -16,6 +18,11 @@ const ClothesTable: React.FC<TableProps> = ({
 	className,
 	addOrEdit,
 }) => {
+	const dispatch = useAppDispatch();
+	const handleDelete = (id: Pick<ClothesTypes, "id">) => {
+		dispatch(deleteCloth(id));
+	};
+
 	return (
 		<div
 			className={`bg-appBlack rounded-[2.4rem] h-[84vh] flex flex-col overflow-hidden  ${className}`}
@@ -56,7 +63,7 @@ const ClothesTable: React.FC<TableProps> = ({
 								{item.brand}
 							</div>
 							<div className="w-[18%] text-left overflow-hidden text-ellipsis whitespace-nowrap pr-8">
-								{item.size}
+								{(item.size.join(", "))}
 							</div>
 							<div className="w-[18%] text-left overflow-hidden text-ellipsis whitespace-nowrap pr-8">
 								{item.colour.name}
@@ -79,7 +86,7 @@ const ClothesTable: React.FC<TableProps> = ({
 									reverse={true}
 									style="SMALLER"
 									type={"button"}
-									onClick={() => console.log("sss")}
+									onClick={() => handleDelete({ id: item.id })}
 									title={"Delete"}
 									disabled={false}
 								/>

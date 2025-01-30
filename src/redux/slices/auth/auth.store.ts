@@ -8,6 +8,7 @@ import {
 	HTTPStatus,
 	RequestErrorType,
 	RoleType,
+	StaticType,
 	UserType,
 } from "@/types/types";
 import getUserInfo from "@/utils/getUserInfo";
@@ -15,6 +16,7 @@ import {
 	addBasketItem,
 	addRemoveFavorite,
 	countEdit,
+	deleteUser,
 	getBasketItems,
 	getFavorites,
 	getUsers,
@@ -27,42 +29,31 @@ import { RootState } from "@/redux/store";
 
 interface AuthState {
 	user: UserType | null;
+
 	status: HTTPStatus;
 	error: RequestErrorType;
 	users: UserType[];
-	register: {
-		status: HTTPStatus;
-		error: RequestErrorType;
-	};
-	updateUserInfo: {
-		status: HTTPStatus;
-		error: RequestErrorType;
-	};
-	addRemoveFavorite: {
-		status: HTTPStatus;
-		error: RequestErrorType;
-	};
+	getUsersStatus: HTTPStatus;
+	getUserserror: RequestErrorType;
+	register: StaticType;
+	updateUserInfo: StaticType;
+	deleteUser: StaticType;
+
+	addRemoveFavorite: StaticType;
+	addBasket: StaticType;
+	removeBasket: StaticType;
+	countEdit: StaticType;
 	favorites: FiltersType<ClothesTypes[]>;
-	addBasket: {
-		status: HTTPStatus;
-		error: RequestErrorType;
-	};
-	removeBasket: {
-		status: HTTPStatus;
-		error: RequestErrorType;
-	};
-	countEdit: {
-		status: HTTPStatus;
-		error: RequestErrorType;
-	};
 	basket: FiltersType<ClothesTypesForBasket[]>;
 }
 
 const initialState: AuthState = {
 	user: getUserInfo(),
 	users: [],
-	status: HTTP_STATUS.IDLE,
+	getUsersStatus: HTTP_STATUS.IDLE,
 	error: null,
+	status: HTTP_STATUS.IDLE,
+	getUserserror: null,
 	register: {
 		status: HTTP_STATUS.IDLE,
 		error: null,
@@ -72,6 +63,10 @@ const initialState: AuthState = {
 		error: null,
 	},
 
+	deleteUser: {
+		status: HTTP_STATUS.IDLE,
+		error: null,
+	},
 	addRemoveFavorite: {
 		status: HTTP_STATUS.IDLE,
 		error: null,
@@ -184,22 +179,46 @@ const authSlice = createSlice({
 			 * Update the user
 			 */
 
+			.addCase(deleteUser.pending, (state) => {
+				state.deleteUser.status = HTTP_STATUS.PENDING;
+				state.deleteUser.error = null;
+			})
+			.addCase(
+				deleteUser.fulfilled,
+				(state, action: PayloadAction<Pick<UserType, "id">>) => {
+					state.users = state.users.filter(
+						(u: UserType) => u.id !== action.payload.id
+					);
+					state.deleteUser.status = HTTP_STATUS.FULFILLED;
+				}
+			)
+			.addCase(
+				deleteUser.rejected,
+				(state, action: PayloadAction<RequestErrorType>) => {
+					state.deleteUser.status = HTTP_STATUS.REJECTED;
+					state.deleteUser.error = action.payload;
+				}
+			)
+			/**
+			 * Delete user
+			 */
+
 			.addCase(getUsers.pending, (state) => {
-				state.status = HTTP_STATUS.PENDING;
-				state.error = null;
+				state.getUsersStatus = HTTP_STATUS.PENDING;
+				state.getUserserror = null;
 			})
 			.addCase(
 				getUsers.fulfilled,
 				(state, action: PayloadAction<UserType[]>) => {
 					state.users = action.payload;
-					state.status = HTTP_STATUS.FULFILLED;
+					state.getUsersStatus = HTTP_STATUS.FULFILLED;
 				}
 			)
 			.addCase(
 				getUsers.rejected,
 				(state, action: PayloadAction<RequestErrorType>) => {
-					state.status = HTTP_STATUS.REJECTED;
-					state.error = action.payload;
+					state.getUsersStatus = HTTP_STATUS.REJECTED;
+					state.getUserserror = action.payload;
 				}
 			)
 			/**

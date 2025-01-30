@@ -51,9 +51,52 @@ export const getCloth = createAsyncThunk<
 	}
 });
 /**
- * Get Clothes
+ * Get Cloth
  */
 
+export const updateCloth = createAsyncThunk<
+	ClothesTypes,
+	ClothesTypes,
+	{ rejectValue: RequestErrorType }
+>("clothes/updateCloth", async (credentials, { rejectWithValue }) => {
+	try {
+		const { data } = await axiosClient.put(
+			`/clothes/${credentials.id}`,
+			credentials
+		);
+		toast.success("Cloth updated successfully !");
+		return data;
+	} catch (error: unknown) {
+		const axiosError = error as RequestErrorType;
+		const errorMessage = {
+			message: axiosError.message || "Failed to get clothes",
+		};
+		return rejectWithValue(errorMessage);
+	}
+});
+/**
+ * Update Cloth
+ */
+export const deleteCloth = createAsyncThunk<
+	Pick<ClothesTypes, "id">,
+	Pick<ClothesTypes, "id">,
+	{ rejectValue: RequestErrorType }
+>("clothes/deleteCloth", async (credentials, { rejectWithValue }) => {
+	try {
+		const { data } = await axiosClient.delete(`/clothes/${credentials.id}`);
+		toast.success("Cloth deleted successfully !");
+		return { id: data.id };
+	} catch (error: unknown) {
+		const axiosError = error as RequestErrorType;
+		const errorMessage = {
+			message: axiosError.message || "Failed to delete clothes",
+		};
+		return rejectWithValue(errorMessage);
+	}
+});
+/**
+ * Delete Cloth
+ */
 export const getBrands = createAsyncThunk<
 	FiltersTypeData[],
 	null,

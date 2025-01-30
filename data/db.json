@@ -5,7 +5,7 @@
       "email": "admin@aa.aa",
       "password": "admin",
       "role": "ADMIN",
-      "fullName": "Hrant asd",
+      "fullName": "Admin",
       "age": "",
       "gender": "",
       "country": "",
@@ -18,21 +18,16 @@
       "email": "asd@aa.aa",
       "password": "asd",
       "image": "NoImage",
-      "favorites": [],
-      "basket": [
-        {
-          "id": "3f295e80-9508-4541-b839-004613ee08d6",
-          "clotheId": "3",
-          "count": 1,
-          "size": "S",
-          "aviable": 20
-        }
+      "favorites": [
+        "1",
+        "2"
       ],
+      "basket": [],
       "role": "USER",
-      "fullName": "dddd asd",
+      "fullName": "ddddasddd asddddd",
       "age": "22",
-      "gender": "",
-      "country": "",
+      "gender": "Male",
+      "country": "Algeria",
       "facebook": "",
       "instagram": "",
       "twitter": ""
@@ -40,7 +35,7 @@
     {
       "id": "cb71",
       "fullName": "asd",
-      "email": "asda@aa.aa",
+      "email": "asd@aa.aaa",
       "password": "asd",
       "confirmPassword": "asd",
       "image": "NoImage",
@@ -106,11 +101,11 @@
           "id": "0e0e8f1d-e6c7-448b-abc4-4b96b253d9f1"
         }
       ],
-      "aviable": 0,
+      "aviable": 1,
       "price": "120",
       "name": "Casual Shirt",
       "description": "A comfortable cotton shirt perfect for everyday wear.",
-      "sale": "20%",
+      "sale": "21",
       "brand": "FashionBrand",
       "category": "Shirts",
       "colour": {
@@ -120,10 +115,10 @@
       },
       "size": [
         "S",
-        "L",
-        "XL"
+        "M",
+        "L"
       ],
-      "gender": "CHILDREN"
+      "gender": "FEMALE"
     },
     {
       "id": "2",
@@ -138,9 +133,19 @@
             "image": "NoImage"
           },
           "id": "c0a2682d-b812-4b14-a3de-5957b4b3f0aa"
+        },
+        {
+          "comment": "zxczxczx",
+          "rating": 1,
+          "user": {
+            "id": "1b39",
+            "fullName": "ddddas asddddd",
+            "image": "NoImage"
+          },
+          "id": "b76c8ec7-9122-411a-9d5d-97ee5be9c888"
         }
       ],
-      "aviable": 20,
+      "aviable": 19,
       "price": "220",
       "name": "Elegant Dress",
       "description": "A stylish evening dress with a modern design.",
@@ -197,7 +202,7 @@
       "price": "120",
       "name": "Unisex Jacket",
       "description": "A versatile jacket suitable for all seasons.",
-      "sale": "15%",
+      "sale": "15",
       "brand": "OutdoorGear",
       "category": "Jackets",
       "colour": {
@@ -215,39 +220,6 @@
       "id": "4",
       "img": "/images/clothes/cloth4.jpg",
       "comments": [],
-      "aviable": 20,
-      "price": "120",
-      "name": "Elegant Dress",
-      "description": "A stylish evening dress with a modern design.",
-      "sale": null,
-      "brand": "LuxuryStyle",
-      "category": "Dresses",
-      "colour": {
-        "id": 11,
-        "hexColour": "#F7BF68",
-        "name": "Golden"
-      },
-      "size": [
-        "S",
-        "L"
-      ],
-      "gender": "FEMALE"
-    },
-    {
-      "id": "5",
-      "img": "/images/clothes/cloth4.jpg",
-      "comments": [
-        {
-          "comment": "testssts",
-          "rating": 7,
-          "user": {
-            "id": "769e",
-            "fullName": "asd",
-            "image": "NoImage"
-          },
-          "id": "42029863-e2c4-40b1-858d-de34cdce3c3b"
-        }
-      ],
       "aviable": 20,
       "price": "120",
       "name": "Elegant Dress",

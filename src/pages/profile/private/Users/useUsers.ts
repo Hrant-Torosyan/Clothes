@@ -6,20 +6,23 @@ import { useEffect, useState } from "react";
 
 export const useUsers = () => {
 	const dispatch = useAppDispatch();
-	const { status } = useAppSelector(getUserState);
+	const { getUsersStatus } = useAppSelector(getUserState);
 
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		if (status === HTTP_STATUS.IDLE) {
+		if (getUsersStatus === HTTP_STATUS.IDLE) {
 			setIsLoading(true);
 			dispatch(getUsers());
 		}
 
-		if (status === HTTP_STATUS.PENDING || status === HTTP_STATUS.FULFILLED) {
+		if (
+			getUsersStatus === HTTP_STATUS.PENDING ||
+			getUsersStatus === HTTP_STATUS.FULFILLED
+		) {
 			setIsLoading(false);
 		}
-	}, [dispatch, status]);
+	}, [dispatch, getUsersStatus]);
 
 	return { isLoading };
 };

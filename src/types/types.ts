@@ -11,10 +11,15 @@ export interface FiltersType<T> {
 	status: HTTPStatus;
 	error: RequestErrorType;
 }
+export interface StaticType {
+	status: HTTPStatus;
+	error: RequestErrorType;
+}
 export interface ErrorType {
 	active: boolean;
 	message: null | string;
 }
+
 export type ErrorTypes = Record<string, ErrorType>;
 
 /**

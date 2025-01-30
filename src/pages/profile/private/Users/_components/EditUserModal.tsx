@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { HTTP_STATUS } from "@/redux/constant";
 import { getUserState } from "@/redux/slices/auth/auth.store";
 import { updateUserInfo } from "@/redux/slices/auth/auth.thunk";
-import { ErrorType, ErrorTypes, UserType } from "@/types/types";
+import { ErrorTypes, UserType } from "@/types/types";
 import { validEmail } from "@/utils/vaildEmail";
 import { validText } from "@/utils/validText";
 import { useState } from "react";
@@ -24,22 +24,24 @@ const EditUserModal = ({ editUserModal, onClose }: EditUserModalProps) => {
 	const { updateUserInfo: updateState } = useAppSelector(getUserState);
 	const [formData, setFormData] = useState({ ...editUserModal });
 	const [errors, setErrors] = useState<ErrorTypes>({});
-	const handleChange = (key: string, value: string) => {
-		setFormData((prev) => ({
-			...prev,
-			[key]: value,
-		}));
-	};
-	const handleFullNameChange = (key: "name" | "surname", value: string) => {
+	const handleChange = (name: string, value: string) => {
 		const [currentName, currentSurname] = formData.fullName.split(" ");
-		const updatedFullName =
-			key === "name"
-				? `${value} ${currentSurname || ""}`.trim()
-				: `${currentName || ""} ${value}`.trim();
-		setFormData((prev) => ({
-			...prev,
-			fullName: updatedFullName,
-		}));
+		if (name === "name" || name === "surname") {
+			const updatedFullName =
+				name === "name"
+					? `${value} ${currentSurname || ""}`.trim()
+					: `${currentName || ""} ${value}`.trim();
+
+			setFormData((prevState) => ({
+				...prevState,
+				fullName: updatedFullName,
+			}));
+		} else {
+			setFormData((prevState) => ({
+				...prevState,
+				[name]: value,
+			}));
+		}
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -59,17 +61,16 @@ const EditUserModal = ({ editUserModal, onClose }: EditUserModalProps) => {
 			});
 			return;
 		}
-		try {
-			const resultAction = await dispatch(
-				updateUserInfo({ type: "ADMIN", user: formData })
-			);
-
-			if (updateUserInfo.fulfilled.match(resultAction)) {
+		dispatch(updateUserInfo({ type: "ADMIN", user: formData }))
+			.unwrap()
+			.then(() => {
 				onClose();
-			}
-		} catch (error) {
-			console.error("Неизвестная ошибка:", error);
-		}
+			})
+			.catch((err) => {
+				setErrors({
+					email: { active: true, message: err.message },
+				});
+			});
 	};
 
 	return (
@@ -88,15 +89,12 @@ const EditUserModal = ({ editUserModal, onClose }: EditUserModalProps) => {
 							<label className="w-full">
 								<h3 className="text-xl ml-1 mb-2">Name</h3>
 								<Input
+									name="name"
 									value={formData?.fullName?.split?.(" ")?.[0] || ""}
-									setValue={(value) =>
-										handleFullNameChange("name", value)
-									}
+									onChange={(name, value) => handleChange(name, value)}
 									error={errors.fullName}
 									style="SMALL"
-									setError={(err) =>
-										setErrors((prev) => ({ ...prev, fullName: err }))
-									}
+									setError={setErrors}
 									className="w-full"
 									type={"TEXT"}
 									placeholder={"Name"}
@@ -106,15 +104,12 @@ const EditUserModal = ({ editUserModal, onClose }: EditUserModalProps) => {
 							<label className="w-full">
 								<h3 className="text-xl ml-1 mb-2">Surname</h3>
 								<Input
+									name="surname"
 									value={formData?.fullName?.split?.(" ")?.[1] || ""}
-									setValue={(value) =>
-										handleFullNameChange("surname", value)
-									}
+									onChange={(name, value) => handleChange(name, value)}
 									error={errors.surname}
 									style="SMALL"
-									setError={(err) =>
-										setErrors((prev) => ({ ...prev, surname: err }))
-									}
+									setError={setErrors}
 									className="w-full"
 									type={"TEXT"}
 									placeholder={"Surname"}
@@ -126,13 +121,12 @@ const EditUserModal = ({ editUserModal, onClose }: EditUserModalProps) => {
 							<label className="w-full">
 								<h3 className="text-xl ml-1 mb-2">Age</h3>
 								<Input
+									name="age"
 									value={formData.age}
-									setValue={(value) => handleChange("age", value)}
+									onChange={(name, value) => handleChange(name, value)}
 									error={errors.age}
 									style="SMALL"
-									setError={(err) =>
-										setErrors((prev) => ({ ...prev, age: err }))
-									}
+									setError={setErrors}
 									className="w-full"
 									type={"NUM"}
 									placeholder={"Age"}
@@ -142,13 +136,12 @@ const EditUserModal = ({ editUserModal, onClose }: EditUserModalProps) => {
 							<label className="w-full">
 								<h3 className="text-xl ml-1 mb-2">Email</h3>
 								<Input
+									name="email"
 									value={formData.email}
-									setValue={(value) => handleChange("email", value)}
+									onChange={(name, value) => handleChange(name, value)}
 									error={errors.email}
 									style="SMALL"
-									setError={(err) =>
-										setErrors((prev) => ({ ...prev, email: err }))
-									}
+									setError={setErrors}
 									className="w-full"
 									type={"TEXT"}
 									placeholder={"Email Address"}
@@ -157,6 +150,7 @@ const EditUserModal = ({ editUserModal, onClose }: EditUserModalProps) => {
 							</label>
 						</div>
 					</div>
+
 					<div className="mb-10">
 						<h2 className="text-2xl opacity-70 font-bold mb-3">
 							Additional Info
@@ -166,18 +160,48 @@ const EditUserModal = ({ editUserModal, onClose }: EditUserModalProps) => {
 								<h3 className="text-xl ml-1 mb-2">Gender</h3>
 								<SimpleSelect
 									title="Gender"
-									setSelect={(value) => handleChange("gender", value)}
 									select={formData.gender}
-									selectOptions={gender}
+									optionsRenderer={() =>
+										gender.map((genderValue, index) => (
+											<div
+												onClick={() =>
+													handleChange("gender", genderValue)
+												}
+												className={`selectMenuItem 	${
+													genderValue === formData.gender
+														? "active"
+														: ""
+												}`}
+												key={index}
+											>
+												{genderValue}
+											</div>
+										))
+									}
 								/>
 							</label>
 							<label className="w-full">
 								<h3 className="text-xl ml-1 mb-2">Country</h3>
 								<SimpleSelect
 									title="Country"
-									setSelect={(value) => handleChange("country", value)}
 									select={formData.country}
-									selectOptions={countries}
+									optionsRenderer={() =>
+										countries.map((country, index) => (
+											<div
+												onClick={() =>
+													handleChange("country", country)
+												}
+												className={`selectMenuItem 	${
+													country === formData.country
+														? "active"
+														: ""
+												}`}
+												key={index}
+											>
+												{country}
+											</div>
+										))
+									}
 								/>
 							</label>
 						</div>
@@ -188,39 +212,36 @@ const EditUserModal = ({ editUserModal, onClose }: EditUserModalProps) => {
 						</h2>
 						<div className="flex gap-8 mb-5">
 							<Input
+								name="facebook"
 								value={formData.facebook}
-								setValue={(value) => handleChange("facebook", value)}
+								onChange={(name, value) => handleChange(name, value)}
 								error={errors.facebook}
 								style="SMALL"
-								setError={(err) =>
-									setErrors((prev) => ({ ...prev, facebook: err }))
-								}
+								setError={setErrors}
 								className="w-full"
 								type={"TEXT"}
 								placeholder={"facebook.com/@username"}
 								disabled={false}
 							/>
 							<Input
+								name="instagram"
 								value={formData.instagram}
-								setValue={(value) => handleChange("instagram", value)}
+								onChange={(name, value) => handleChange(name, value)}
 								error={errors.instagram}
 								style="SMALL"
-								setError={(err) =>
-									setErrors((prev) => ({ ...prev, instagram: err }))
-								}
+								setError={setErrors}
 								className="w-full"
 								type={"TEXT"}
 								placeholder={"instagram.com/@username"}
 								disabled={false}
 							/>
 							<Input
+								name="instagram"
 								value={formData.twitter}
-								setValue={(value) => handleChange("twitter", value)}
+								onChange={(name, value) => handleChange(name, value)}
 								error={errors.twitter}
 								style="SMALL"
-								setError={(err) =>
-									setErrors((prev) => ({ ...prev, twitter: err }))
-								}
+								setError={setErrors}
 								className="w-full"
 								type={"TEXT"}
 								placeholder={"twitter.com/@username"}

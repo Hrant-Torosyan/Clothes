@@ -6,16 +6,14 @@ type Props = {
 	title: string;
 	classNames?: string;
 	select: string;
-	setSelect: (value: string) => void;
-	selectOptions?: string[];
+	optionsRenderer: () => React.ReactNode;
 };
 
 const SimpleSelect = ({
 	title,
 	classNames,
 	select,
-	setSelect,
-	selectOptions,
+	optionsRenderer,
 }: Props) => {
 	const [openSelect, setOpenSelect] = useState(false);
 	const selectRef = useClickOutside<HTMLDivElement>(() =>
@@ -36,17 +34,7 @@ const SimpleSelect = ({
 			</div>
 			<div tabIndex={-1} className="selectMenu scroll">
 				<div className="p-4 max-h-[20rem] overflow-auto">
-					{selectOptions.map((option: string, key: number) => (
-						<div
-							onClick={() => setSelect(option)}
-							key={key}
-							className={`selectMenuItem 	${
-								option === select ? "active" : ""
-							}`}
-						>
-							{option}
-						</div>
-					))}
+					{optionsRenderer()}
 				</div>
 			</div>
 		</div>

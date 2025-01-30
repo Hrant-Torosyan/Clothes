@@ -14,7 +14,7 @@ const Clothes = () => {
 	return (
 		<div>
 			<Title title="Clothes" />
-			<ClothesTable basketItems={clothesData} addOrEdit={setAddEditInfo}/>
+			<ClothesTable basketItems={clothesData} addOrEdit={setAddEditInfo} />
 			{addEditInfo.isOpen && (
 				<AddEditModal
 					info={addEditInfo}

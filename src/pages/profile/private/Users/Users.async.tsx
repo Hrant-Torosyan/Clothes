@@ -5,6 +5,7 @@ import { useUsers } from "@/pages/profile/private/Users/useUsers";
 const UsersAsync = () => {
 	const { isLoading } = useUsers();
 
+
 	if (isLoading) {
 		return (
 			<div className="h-screen">

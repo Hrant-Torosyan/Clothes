@@ -1,25 +1,53 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { HTTP_STATUS } from "@/redux/constant";
-import { getUserState } from "@/redux/slices/auth/auth.store";
 import { getClothesState } from "@/redux/slices/clothes/clothes.store";
-import { getClothes } from "@/redux/slices/clothes/clothes.thunk";
-import { useEffect, useState } from "react";
+import {
+	getClothes,
+	getBrands,
+	getColours,
+	getCategories,
+} from "@/redux/slices/clothes/clothes.thunk";
+import { useEffect } from "react";
 
 export const useClothes = () => {
 	const dispatch = useAppDispatch();
-	const { user } = useAppSelector(getUserState);
-	const { status } = useAppSelector(getClothesState);
-	const [isLoading, setIsLoading] = useState(false);
+	const {
+		status: clothesStatus,
+		brands,
+		colours,
+		categories,
+	} = useAppSelector(getClothesState);
+
+	const isLoading =
+		clothesStatus === HTTP_STATUS.IDLE ||
+		clothesStatus === HTTP_STATUS.PENDING ||
+		brands.status === HTTP_STATUS.IDLE ||
+		brands.status === HTTP_STATUS.PENDING ||
+		colours.status === HTTP_STATUS.IDLE ||
+		colours.status === HTTP_STATUS.PENDING ||
+		categories.status === HTTP_STATUS.IDLE ||
+		categories.status === HTTP_STATUS.PENDING;
+
 	useEffect(() => {
-		if (user.id && status === HTTP_STATUS.IDLE) {
-			setIsLoading(true);
+		if (clothesStatus === HTTP_STATUS.IDLE) {
 			dispatch(getClothes());
 		}
-
-		if (status === HTTP_STATUS.REJECTED || status === HTTP_STATUS.FULFILLED) {
-			setIsLoading(false);
+		if (brands.status === HTTP_STATUS.IDLE) {
+			dispatch(getBrands());
 		}
-	}, [dispatch, status, user.id]);
+		if (colours.status === HTTP_STATUS.IDLE) {
+			dispatch(getColours());
+		}
+		if (categories.status === HTTP_STATUS.IDLE) {
+			dispatch(getCategories());
+		}
+	}, [
+		clothesStatus,
+		brands.status,
+		dispatch,
+		colours.status,
+		categories.status,
+	]);
 
 	return { isLoading };
 };

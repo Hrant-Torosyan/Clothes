@@ -1,5 +1,6 @@
 import SwitchButtons from "@/components/widgets/SwitchButtons";
 import Title from "@/components/widgets/Title";
+import { clothesGender } from "@/constants/clothesGender";
 import { setFilters } from "@/redux/slices/clothes/clothes.store";
 import { GenderType } from "@/types/types";
 import { useDispatch } from "react-redux";
@@ -19,7 +20,7 @@ const ClothesTitle = ({ gender }: ClothesTitleProps) => {
 					dispatch(setFilters({ type: "gender", value: val }))
 				}
 				className={"w-[45rem]"}
-				buttons={["ALL", "MALE", "FEMALE", "UNISEX", "CHILDREN"]}
+				buttons={clothesGender}
 			/>
 		</div>
 	);

@@ -50,7 +50,7 @@ const Profile = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(updateUserInfo({ type: "USER", user: profilePayload }))
+		dispatch(updateUserInfo({ type: "USER", user: profilePayload }));
 	};
 
 	return (

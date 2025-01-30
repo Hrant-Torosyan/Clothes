@@ -12,7 +12,7 @@ const CountEdit = ({
 	count,
 	setCount,
 	min = 1,
-	max = 20,
+	max = 10000,
 	className,
 }: Props) => {
 	const handleIncrement = (e: React.MouseEvent) => {
@@ -32,6 +32,7 @@ const CountEdit = ({
 	return (
 		<div className={`flex items-center gap-6 ${className ? className : ""}`}>
 			<button
+				type="button"
 				className={`transition-all hover:text-orange active:scale-90 ${
 					count === min ? "opacity-40 pointer-events-none" : ""
 				}`}
@@ -41,6 +42,7 @@ const CountEdit = ({
 			</button>
 			<span className="w-8 text-center text-sm">{count}</span>
 			<button
+				type="button"
 				onClick={handleIncrement}
 				className={`transition-all hover:text-orange active:scale-90 ${
 					count === max ? "opacity-40 pointer-events-none" : ""
